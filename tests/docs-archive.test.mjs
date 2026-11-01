@@ -3,16 +3,24 @@ import assert from 'node:assert/strict';
 import {mkdtemp,mkdir,writeFile,readFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {sha256} from '../scripts/docs-versions/contract.mjs';
+import {sha256,validateCatalog} from '../scripts/docs-versions/contract.mjs';
 import {createSnapshot} from '../scripts/docs-versions/snapshot.mjs';
+
+test('prerelease-only catalogs have no latest stable version',()=>{
+  const entry={version:'2.0.0-rc.1',channel:'prerelease',manifestSha256:'a'.repeat(64),supported:true,topics:['index.html']};
+  const catalog={schemaVersion:1,family:'krigsvold',framework:'react',latestStable:null,versions:[entry]};
+  assert.equal(validateCatalog(catalog),catalog);
+  assert.throws(()=>validateCatalog({...catalog,latestStable:entry.version}),/Latest/);
+  assert.throws(()=>validateCatalog({...catalog,versions:[entry,{...entry,version:'1.0.0',channel:'stable'}]}),/Latest/);
+});
 
 test('a pinned local snapshot is created once, and older archives cannot be replaced or corrupted',async()=>{
   const root=await mkdtemp(join(tmpdir(),'docs-snapshot-'));try{
     const build=join(root,'build'),archives=join(root,'archives');await mkdir(build);await mkdir(archives);
     await writeFile(join(build,'index.html'),'<meta name="robots" content="noindex"><h1>Snapshot</h1>');
-    const metadata={schemaVersion:1,family:'martlet',framework:'react',docsVersion:'2.0.0',basePath:'/docs/v/2.0.0/',implementation:{kind:'npm',name:'@martlet/react',version:'2.0.0',tag:'v2.0.0'},core:{name:'@martlet/core',version:'2.2.3',integrity:`sha512-${Buffer.alloc(64,1).toString('base64')}`},source:{repository:'martletdesign/react',commit:'a'.repeat(40),tag:'v2.0.0'},fixtures:{source:'repository'},toolchain:{node:'24.19.0',vite:'8.3.5'},createdAt:'2026-11-01T00:00:00.000Z',indexing:'noindex'};
-    const lock={packages:{'node_modules/@martlet/core':{version:metadata.core.version,integrity:metadata.core.integrity}}};
-    const baseline={schemaVersion:1,family:'martlet',framework:'react',latestStable:null,versions:[]},bytes=Buffer.from(JSON.stringify(baseline));
+    const metadata={schemaVersion:1,family:'krigsvold',framework:'react',docsVersion:'2.0.0',basePath:'/docs/v/2.0.0/',implementation:{kind:'npm',name:'@krigsvold/react',version:'2.0.0',tag:'v2.0.0'},core:{name:'@krigsvold/core',version:'2.2.4',integrity:`sha512-${Buffer.alloc(64,1).toString('base64')}`},source:{repository:'krigsvolddesign/react',commit:'a'.repeat(40),tag:'v2.0.0'},fixtures:{source:'repository'},toolchain:{node:'24.19.0',vite:'8.3.5'},createdAt:'2026-11-01T00:00:00.000Z',indexing:'noindex'};
+    const lock={packages:{'node_modules/@krigsvold/core':{version:metadata.core.version,integrity:metadata.core.integrity}}};
+    const baseline={schemaVersion:1,family:'krigsvold',framework:'react',latestStable:null,versions:[]},bytes=Buffer.from(JSON.stringify(baseline));
     const args={buildRoot:build,archiveRoot:archives,metadata,coreLock:lock,baselineBytes:bytes,baselineSha256:sha256(bytes)};
     await assert.rejects(createSnapshot({...args,baselineSha256:'f'.repeat(64)}),/Untrusted baseline/);
     await assert.rejects(createSnapshot({...args,coreLock:{packages:{}}}),/Exact core/);
