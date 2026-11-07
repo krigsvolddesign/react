@@ -2,8 +2,8 @@
   "family": "krigsvold",
   "core": {
     "name": "@krigsvold/core",
-    "version": "2.2.4",
-    "integrity": "sha512-bApvYVgYbGl/lkOYI1i/HYr1uS8ZwITrr/H1SBT2C3/ziA0UvXSsAS2Pppk/L6E46uxboArsfxaSaUwZ7rV2GQ=="
+    "version": "2.2.5",
+    "integrity": "sha512-un5CmNf21E7UKVARQTmNdmhppp+WAjR+O1bwGMTbCEr8P7ELLCQ7T9bIwGJ5d7cTakXhgOdNfSP/hzgBH6BrrA=="
   },
   "vite": "8.3.5"
 }
