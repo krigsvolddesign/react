@@ -238,3 +238,6 @@
 .krigsvold-article-metadata { overflow-wrap:anywhere; }
 
 .krigsvold-disclosure > summary { overflow-wrap:anywhere; }
+
+/* Native and composed controls share the established semantic placeholder role. */
+.krigsvold :where(input, textarea)::placeholder { color:var(--krigsvold-input-placeholder); opacity:1; }
