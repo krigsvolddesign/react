@@ -36,6 +36,5 @@ html[data-appearance=dark] .reference-shell .krigsvold-button--secondary:not(:di
  .reference-shell .rd-nav { padding-inline:min(1rem,16px); }
 }
 
-/* Reference page titles follow the canonical section/compact role. The
-   approved signature homepage retains its own display weight. */
-.reference-shell .page-masthead:not(.hero--signature) h1 { font-weight:600; }
+/* Reference masthead titles follow the accepted Jekyll host role. */
+.reference-shell .page-masthead h1 { font-weight:600; }
