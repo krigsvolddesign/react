@@ -18,8 +18,8 @@ Import components from `@krigsvold/react`, component styles from `@krigsvold/rea
 | `Pagination` | Controlled page/pageCount/onPageChange; disables unavailable directions and maintains focus when the current action becomes unavailable. Loading and server requests belong to the caller. |
 | `DataTable` | Required caption, native table children and a labelled keyboard-focusable scroll region. Supply correct header scopes and cell relationships. |
 | `DefinitionList` | Term/description items with rows, stack or grid layout. |
-| `TableOfContents` | Links to caller-owned heading IDs, with declared depth and inline/index variants. |
-| `Article` | Reading composition; keep contents, metadata and supporting context meaningful and correctly ordered. |
+| `TableOfContents` | Explicit links to caller-owned heading IDs. Defaults to inline; legacy index variant remains accepted and stays in normal reading flow. Nothing is generated automatically. |
+| `Article` | Reading composition; optional contents appear inline above the prose. Metadata and supporting context remain independently supplied. |
 | `AppShell` | Brand, navigation, utilities and main content. Navigation placement: default, top, side or none; header appearance may be explicit. Use one page-level shell to keep the main landmark and skip target unique. |
 
 ## State, rendering and application patterns

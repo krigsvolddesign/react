@@ -339,7 +339,7 @@ export type ContentsItem = { id: string; label: ReactNode; depth?: 2 | 3 };
 export function TableOfContents({
   items,
   label = "On this page",
-  variant = "index",
+  variant = "inline",
   className = "",
   ...props
 }: Omit<ComponentPropsWithRef<"nav">, "children"> & {
@@ -406,8 +406,8 @@ export function Article({
         )}
       </header>
       <div className="krigsvold-article-layout" data-contents={!!contents}>
-        {contents && <div className="krigsvold-article-context">{contents}</div>}
         <div className="krigsvold-prose">
+          {contents && <div className="krigsvold-article-context">{contents}</div>}
           {children}
           {aside && <aside className="krigsvold-article-support" aria-label={contextLabel}>{aside}</aside>}
         </div>

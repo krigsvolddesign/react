@@ -58,7 +58,7 @@ try {
  const home=renderDocument(template,{styles:pageDataElement(homeData),markup:renderToString(React.createElement(App,{data:homeData})),title:'Krigsvold, in plain sight. · React',originalTitle:'<title>Northlight examples</title>'});
  await writeFile(resolve(out,'index.html'),home);await mkdir(resolve(out,'home'),{recursive:true});await writeFile(resolve(out,'home/index.html'),home);
  for(const page of referenceDocuments){
-  const data={id:'reference-'+page.path,page:null,reference:page,rendered:{reference:referenceHeadingAnchors(renderMarkdown(page.body,base,{docId:'reference-'+page.path.replaceAll('/','-')}),page.toc)},entries:[],requiresSpecial:false};
+  const data={id:'reference-'+page.path,page:null,reference:page,rendered:{reference:referenceHeadingAnchors(renderMarkdown(page.body,base,{docId:'reference-'+page.path.replaceAll('/','-')}),page.anchors??page.toc)},entries:[],requiresSpecial:false};
   const dir=resolve(out,page.path);await mkdir(dir,{recursive:true});
   await writeFile(resolve(dir,'index.html'),renderDocument(template,{styles:pageDataElement(data),markup:renderToString(React.createElement(App,{data})),title:page.title+' · Krigsvold React',originalTitle:'<title>Northlight examples</title>'}));
  }
