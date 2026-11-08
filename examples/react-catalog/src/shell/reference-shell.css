@@ -36,5 +36,7 @@ html[data-appearance=dark] .reference-shell .krigsvold-button--secondary:not(:di
  .reference-shell .rd-nav { padding-inline:min(1rem,16px); }
 }
 
-/* Reference masthead titles follow the accepted Jekyll host role. */
+/* Reference headings and masthead flow follow the accepted Jekyll host. */
+.reference-shell :is(h1,h2,h3) { text-wrap:wrap; }
 .reference-shell .page-masthead h1 { font-weight:600; }
+.reference-shell .page-masthead p:not(.eyebrow):not(.hero-image-credit) { margin:0 0 1rem; }
