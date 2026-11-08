@@ -7,8 +7,9 @@
    display defaults for standalone applications. */
 .reference-shell .example-card h3 { font-family:var(--sans); font-weight:600; }
 .reference-shell .adm-panel h2 { font:600 1.3rem/1.25 var(--sans); margin:0 0 .75rem; }
-.reference-shell .editorial-content h2 { margin-block:2rem 1rem; }
-.reference-shell .editorial-content h3 { margin-block:1.75rem 1rem; }
+.reference-shell .editorial-content h2 { margin-block:3.4rem 1rem; }
+.reference-shell .editorial-content h3 { margin-block:2.3rem .75rem; }
+.reference-shell .editorial-content p { margin:0 0 1rem; }
 .reference-shell .krigsvold-button:not(:disabled):not(.krigsvold-button--secondary):not(.krigsvold-button--quiet) { background:var(--navy-900); border-color:var(--navy-900); color:white; }
 .reference-shell .krigsvold-button:not(:disabled):hover { background:var(--blue-600); border-color:var(--blue-600); color:white; }
 .reference-shell .krigsvold-button--secondary:not(:disabled) { color:var(--navy-900); border-color:var(--navy-900); background:transparent; }
