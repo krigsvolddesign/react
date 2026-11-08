@@ -1,23 +1,23 @@
-import {useEffect,useId,useRef,useState,type CSSProperties,type ReactNode} from 'react';
-import {family} from 'catalog-family';
-import './source-shell.css';
+import {useEffect,useRef,useState,type ReactNode} from 'react';
+import './reference-shell.css';
 const base=import.meta.env.BASE_URL.replace(/\/$/,'');
-const href=(path:string)=>`${base}${path}`;
+export const referenceHref=(path:string)=>path.startsWith('/')&&!path.startsWith('//')?`${base}${path}`:path;
 type Props={children:ReactNode;current?:string;title?:string;dashboard?:boolean};
-export function SourceShell({children,current,title,dashboard=false}:Props){
- const [mode,setMode]=useState<'light'|'dark'>('light'),[enhanced,setEnhanced]=useState(false),[open,setOpen]=useState(false),menu=useRef<HTMLButtonElement>(null),id=useId();
- useEffect(()=>{try{setMode(localStorage.getItem('nightjar-appearance')==='dark'?'dark':'light')}catch{}setEnhanced(true)},[]);
- const changeMode=()=>setMode(old=>{const next=old==='light'?'dark':'light';try{localStorage.setItem('nightjar-appearance',next)}catch{}return next});
- const links=[['Home','/examples/home/','home'],['About','/examples/about/','about'],['Archive','/examples/archive/','archive'],['Examples','/examples/','index']] as const;
- const tokens=Object.fromEntries(['font-sans','font-serif','font-display','bg','text','line'].map(key=>[`--ss-${key}`,`var(--${family}-${key})`])) as CSSProperties;
- return <div className={`${family} source-shell ${dashboard?'source-shell--dashboard':'source-shell--reading'} ${family==='krigsvold'?'source-shell--aligned':'source-shell--editorial'}`} {...{[`data-${family}`]:mode}} data-mode={mode} data-enhanced={enhanced?'true':undefined} data-open={open?'true':'false'} style={tokens}>
-  <a className="ss-skip" href="#main">Skip to content</a><header className="ss-header" onKeyDown={event=>{if(event.key==='Escape'&&open){event.preventDefault();setOpen(false);menu.current?.focus()}}}><div className="ss-header-inner">
-   <a className="ss-brand" href={href('/examples/')}><img src={href(`/assets/identity/${family}-mark.svg`)} width="40" height="40" alt=""/><span>{family==='martlet'?'Martlet':'Krigsvold'} examples</span></a>
-   <button ref={menu} className="ss-menu" type="button" aria-expanded={open} aria-controls={id} hidden={!enhanced} onClick={()=>setOpen(!open)}>Menu</button>
-   <nav id={id} aria-label="Primary navigation"><ul>{links.map(([label,path,key])=><li key={key}><a href={href(path)} aria-current={current===key?'page':undefined}>{label}</a></li>)}</ul><button type="button" className="ss-appearance" disabled={!enhanced} aria-pressed={mode==='dark'} onClick={changeMode}>{mode==='dark'?'Light mode':'Dark mode'}</button></nav>
-  </div></header>
-  {!dashboard&&current!=='home'&&<nav className="ss-breadcrumb" aria-label="Breadcrumb"><a href={href('/examples/home/')}>Home</a><span aria-hidden="true"> / </span>{current!=='index'&&<><a href={href('/examples/')}>Examples</a><span aria-hidden="true"> / </span></>}{title&&<span aria-current="page">{title}</span>}</nav>}
+export function SourceShell({children,current,dashboard=false}:Props){
+ const [mode,setMode]=useState<'light'|'dark'>('light'),[enhanced,setEnhanced]=useState(false),[open,setOpen]=useState(false),menu=useRef<HTMLButtonElement>(null);
+ useEffect(()=>{try{setMode(localStorage.getItem('design-appearance')==='dark'?'dark':'light')}catch{}setEnhanced(true)},[]);
+ useEffect(()=>{document.documentElement.dataset.appearance=mode;document.documentElement.dataset.krigsvold=mode},[mode]);
+ const changeMode=()=>setMode(old=>{const next=old==='light'?'dark':'light';try{localStorage.setItem('design-appearance',next)}catch{}return next});
+ const links=[['The Language','/language/','language'],['Examples','/examples/','index'],['Journal','/journal/','journal'],['Use This Template','/setup/','setup']];
+ const groups=[{title:'The language',links:[['Principles and decisions','https://krigsvolddesign.dev/design-language/'],['Pattern contracts','https://krigsvolddesign.dev/design-language/#patterns']]},{title:'Build',links:[['React reference',referenceHref('/')],['Astro reference','https://astro.krigsvolddesign.dev/'],['Jekyll reference','https://jekyll.krigsvolddesign.dev/'],['Core foundations','https://krigsvolddesign.dev/design-system/'],['React source','https://github.com/krigsvolddesign/react'],['MCP and builder skill','https://krigsvolddesign.dev/agents/']]},{title:'Elsewhere',links:[['James Howard','https://jameshoward.us/'],['The Count of Krigsvold','https://krigsvold.org/'],['Martlet','https://martletdesign.dev/']]},{title:'Legal',links:[['Privacy Notice','https://krigsvolddesign.dev/privacy-and-cookie-notice/'],['Cookie Settings','https://krigsvolddesign.dev/privacy-and-cookie-notice/#cookie-settings'],['Terms of Use','https://jameshoward.us/terms-of-use/'],['Copyright','https://jameshoward.us/copyright/'],['Design Licensing','https://krigsvolddesign.dev/privacy-and-cookie-notice/#copyright']]}];
+ return <div className={`krigsvold source-shell reference-shell${dashboard?' reference-shell--dashboard':''}`} data-krigsvold={mode} data-mode={mode} data-enhanced={enhanced?'true':undefined}>
+  <a className="skip-link ss-skip" href="#main">Skip to content</a>
+  <div className="nav-shell"><div className="container"><nav className={`navbar navbar-expand-lg site-navbar mast ss-header${open?' is-menu-open':''}`} data-navigation-ready={enhanced?'true':undefined} aria-label="Primary navigation" onKeyDown={event=>{if(event.key==='Escape'&&open){event.preventDefault();setOpen(false);menu.current?.focus()}}}>
+   <a className="navbar-brand ss-brand" href={referenceHref('/')}><img src={referenceHref('/assets/mark.svg')} alt="" width="34" height="34"/><span>Krigsvold React</span></a>
+   <button ref={menu} className="navbar-toggler nightjar-menu ss-menu" type="button" aria-expanded={open} aria-controls="site-nav" aria-label="Menu" onClick={()=>setOpen(!open)}><span className="navbar-toggler-icon" aria-hidden="true"><span className="navbar-toggler-bar bar1"/><span className="navbar-toggler-bar bar2"/><span className="navbar-toggler-bar bar3"/></span></button>
+   <div className={`collapse navbar-collapse${open?' show':''}`} id="site-nav"><ul className="navbar-nav ms-auto align-items-lg-center">{links.map(([label,path,key])=><li className="nav-item" key={key}><a className="nav-link" href={referenceHref(path)} aria-current={current===key?'page':undefined}>{label}</a></li>)}</ul><button type="button" className="appearance-toggle nightjar-appearance ss-appearance" disabled={!enhanced} aria-pressed={mode==='dark'} onClick={changeMode}>{mode==='dark'?'Light mode':'Dark mode'}</button></div>
+  </nav></div></div>
   <main id="main" tabIndex={-1}>{children}</main>
-  <footer className="ss-footer"><div className="ss-footer-inner"><div><strong>Northlight Field Institute</strong><p>Fictional example using synthetic content.</p></div><nav aria-label="Explore"><h2>Explore</h2><ul>{links.map(([label,path,key])=><li key={key}><a href={href(path)}>{label}</a></li>)}</ul></nav><nav aria-label="Dashboards"><h2>Dashboards</h2><ul>{(['analytics','administration','operations'] as const).map(route=><li key={route}><a href={href(`/examples/dashboard-${route}/`)}>{route[0].toUpperCase()+route.slice(1)}</a></li>)}</ul></nav></div></footer>
+  <footer className="site-footer"><div className="container"><div className="row gy-5 gx-4 gx-lg-5"><div className="col-lg-4"><a className="footer-owner" href="https://jameshoward.us/" aria-label="James Howard website"><img className="footer-owner__badge" src={referenceHref('/assets/owner.svg')} alt="" width="58" height="58"/><span className="footer-owner__site">Krigsvold React</span><span className="footer-owner__byline">A website of James Howard</span></a><p className="mt-4">Components, working patterns, and agent guidance grounded in krigsvold.org.</p></div>{groups.map(group=><div key={group.title} className="col-6 col-md-3 col-lg-2"><h2>{group.title}</h2><ul>{group.links.map(([label,url])=><li key={label}><a href={url}>{label}</a></li>)}</ul></div>)}</div><div className="site-footer__base"><p>Copyright © 2026 James P. Howard, II</p></div></div></footer>
  </div>;
 }
