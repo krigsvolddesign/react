@@ -21,3 +21,15 @@ test('styles use the matching published core and preserve scoped identity', asyn
   assert.match(css, /\.krigsvold\b/);
   assert.doesNotMatch(css, /@(?:martlet|krigsvold)\/theme/);
 });
+
+test('article contents remain author supplied and inline within the prose', () => {
+  const body = createElement('h2', {id:'section'}, 'Reading section');
+  const ordinary = renderToStaticMarkup(createElement(components.Article, {title:'A document'}, body));
+  assert.doesNotMatch(ordinary, /<nav\b|krigsvold-article-context/);
+  const contents = createElement(components.TableOfContents, {label:'Manual contents',items:[{id:'section',label:'Reading section'}]});
+  const manual = renderToStaticMarkup(createElement(components.Article, {title:'A document',contents}, body));
+  assert.match(manual, /data-variant="inline"/);
+  assert.match(manual, /href="#section"/);
+  assert.ok(manual.indexOf('class="krigsvold-prose"') < manual.indexOf('class="krigsvold-article-context"'));
+  assert.ok(manual.indexOf('class="krigsvold-article-context"') < manual.indexOf('id="section"'));
+});

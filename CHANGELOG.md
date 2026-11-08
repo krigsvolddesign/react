@@ -1,5 +1,11 @@
 # @krigsvold/react changelog
 
+## 0.2.2
+
+- Remove automatic contents lists from native documents and examples while retaining all existing headings, anchors, routes and application navigation.
+- Make manually supplied Article contents and TableOfContents render inline above reading content; retain all component props and supported variants.
+- Preserve explicit opt-in contents with `show_toc: true` and author-supplied links in the reference application.
+
 ## 0.2.1
 
 - Correct enlarged-text dashboard navigation and scientific workspace reflow without reducing type size or removing content.
