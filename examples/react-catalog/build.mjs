@@ -8,11 +8,21 @@ import catalog from '../page-archetypes/content/catalog.json' with {type:'json'}
 import selected from './src/selected.json' with {type:'json'};
 import {renderMarkdown} from '../page-archetypes/lib/markdown.mjs';
 import {peerDashboardURL} from './src/dashboard/peer.mjs';
-import {renderDocument} from './src/template.mjs';
+import {renderDocument as renderTemplate} from './src/template.mjs';
+import referenceDocuments from './src/reference-documents.json' with {type:'json'};
+import {referenceHeadingAnchors} from './src/reference-heading-anchors.mjs';
 import {pageDataElement} from './src/page-data.mjs';
 const family=process.env.NIGHTJAR_FAMILY, base=process.env.NIGHTJAR_BASE || '/';
 if(!['martlet','krigsvold'].includes(family)||!validBase(base))throw Error('Provide a family and an absolute directory base');
 const root=resolve('examples/react-catalog'),configFile=resolve(root,'vite.config.mjs');
+const canonicalStyles=['fonts','shell','jekyll','examples','examples-family'].map(name=>`<link rel="stylesheet" href="${base}assets/css/${name}.css">`).join('');
+function renderDocument(template,options){
+ const variant=options.markup.match(/data-hero-variant="([a-z]+)"/)?.[1]||'plain';
+ const dashboard=!options.markup.includes('data-hero-variant=');
+ const init=`<script>try{const mode=localStorage.getItem('design-appearance')==='dark'?'dark':'light';document.documentElement.dataset.appearance=mode;document.documentElement.dataset.krigsvold=mode}catch{}</script>`;
+ return renderTemplate(template,{...options,styles:(options.styles||'')+canonicalStyles+init}).replace('<body>',`<body class="krigsvold hero-context--${variant}${dashboard?' dashboard-page':''}">`);
+}
+
 peerDashboardURL(process.env.NIGHTJAR_PEER_URL,'analytics');
 // Only the checked-in stress fixture opts into the shared HTML/MathML allowlist.
 // Other records use raw HTML disabled. This is not an untrusted ingestion API.
@@ -43,9 +53,18 @@ try {
   const styles=css.map(file=>`<link rel="stylesheet" crossorigin href="${base}${file}">`).join('');
   await writeFile(resolve(dir,'index.html'),renderDocument(template,{styles:styles+pageDataElement(data),markup,title:`${page.title} · Northlight`,originalTitle:'<title>Northlight examples</title>'}));
  }
+
+ const homeData={id:'reference-home',page:null,rendered:{},entries:[],requiresSpecial:false};
+ const home=renderDocument(template,{styles:pageDataElement(homeData),markup:renderToString(React.createElement(App,{data:homeData})),title:'Krigsvold, in plain sight. · React',originalTitle:'<title>Northlight examples</title>'});
+ await writeFile(resolve(out,'index.html'),home);await mkdir(resolve(out,'home'),{recursive:true});await writeFile(resolve(out,'home/index.html'),home);
+ for(const page of referenceDocuments){
+  const data={id:'reference-'+page.path,page:null,reference:page,rendered:{reference:referenceHeadingAnchors(renderMarkdown(page.body,base,{docId:'reference-'+page.path.replaceAll('/','-')}),page.toc)},entries:[],requiresSpecial:false};
+  const dir=resolve(out,page.path);await mkdir(dir,{recursive:true});
+  await writeFile(resolve(dir,'index.html'),renderDocument(template,{styles:pageDataElement(data),markup:renderToString(React.createElement(App,{data})),title:page.title+' · Krigsvold React',originalTitle:'<title>Northlight examples</title>'}));
+ }
  const indexDir=resolve(out,'examples');await mkdir(indexDir,{recursive:true});
  const indexData={id:'index',page:null,rendered:{},entries,requiresSpecial:false};
- await writeFile(resolve(indexDir,'index.html'),renderDocument(template,{styles:pageDataElement(indexData),markup:renderToString(React.createElement(App,{data:indexData})),title:'All page examples · Northlight',originalTitle:'<title>Northlight examples</title>'}));
+ await writeFile(resolve(indexDir,'index.html'),renderDocument(template,{styles:pageDataElement(indexData),markup:renderToString(React.createElement(App,{data:indexData})),title:'A collection of possibilities. · Krigsvold React',originalTitle:'<title>Northlight examples</title>'}));
  for(const [id,name] of dashboards){
   const module=await server.ssrLoadModule(`/src/dashboard/${name}.tsx`);const dir=resolve(indexDir,`dashboard-${id}`);await mkdir(dir,{recursive:true});
   const markup=renderToString(React.createElement(DashboardFrame,{current:id},React.createElement(module[name])));
@@ -57,6 +76,6 @@ try {
  const scientificDir=resolve(indexDir,'scientific-workspace');await mkdir(scientificDir,{recursive:true});
  await writeFile(resolve(scientificDir,'index.html'),renderDocument(scientificTemplate,{markup:renderToString(React.createElement(ScientificPage)),title:'Thermal analysis · Northlight',originalTitle:'<title>Northlight scientific workspace</title>'}));
  // Generic entries cannot render unknown routes; publish only actual records.
- const {rm}=await import('node:fs/promises');await rm(resolve(out,'index.html'));await rm(resolve(out,'dashboard.html'));await rm(resolve(out,'scientific.html'));
+ const {rm}=await import('node:fs/promises');await rm(resolve(out,'dashboard.html'));await rm(resolve(out,'scientific.html'));
  console.log(`${family}: prerendered ${pages.length} content routes, three dashboards, a scientific workspace and an index at ${base}`);
 } finally {await server.close();}

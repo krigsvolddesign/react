@@ -11,8 +11,8 @@ export function DashboardNav({current,base=import.meta.env.BASE_URL}:{current:Da
  const tokens=Object.fromEntries(['text','bg','panel','line','link','accent'].map(name=>[`--rd-${name}`,`var(--${family}-${name})`])) as CSSProperties;
  useEffect(()=>setEnhanced(true),[]);
  return <aside className={`rd-nav ${family==='krigsvold'?'rd-nav--aligned':''}`} style={tokens} aria-label="Dashboard workspace" data-enhanced={enhanced?'true':undefined} data-open={open?'true':'false'} onKeyDown={event=>{if(event.key==='Escape'&&open){event.preventDefault();setOpen(false);toggle.current?.focus();}}}>
-  <p>Northlight · Workspace</p><Button ref={toggle} className="rd-nav-toggle" type="button" aria-controls={id} aria-expanded={open} hidden={!enhanced} onClick={()=>setOpen(!open)}>Dashboard navigation</Button>
-  <nav id={id} aria-label="Dashboard navigation"><ul>{entries.map(entry=><li key={entry.id}><a href={`${prefix}/examples/dashboard-${entry.id}/`} aria-current={current===entry.id?'page':undefined}>{entry.label}</a></li>)}</ul><p>One dataset. Two design languages.</p><a href={`${prefix}/examples/`}>All page examples</a></nav>
+  <p className="eyebrow">Northlight · Workspace</p><Button ref={toggle} className="rd-nav-toggle" type="button" aria-controls={id} aria-expanded={open} hidden={!enhanced} onClick={()=>setOpen(!open)}>Dashboard navigation</Button>
+  <nav id={id} aria-label="Dashboard navigation"><ul>{entries.map(entry=><li key={entry.id}><a href={`${prefix}/examples/dashboard-${entry.id}/`} aria-current={current===entry.id?'page':undefined}>{entry.label}</a></li>)}</ul><p className="rd-nav-caption">One dataset. Two design languages.</p><a href={`${prefix}/examples/`}>All page examples</a></nav>
  </aside>;
 }
 export function DashboardPeerLink({current,peerBase}:{current:DashboardRoute;peerBase?:string}){

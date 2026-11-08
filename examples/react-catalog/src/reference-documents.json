@@ -1,0 +1,69 @@
+[
+  {
+    "path": "language",
+    "title": "A language worth keeping.",
+    "eyebrow": "Krigsvold \u00b7 Principles",
+    "summary": "A wide document tests the shared masthead, index, reading measure, and typography.",
+    "heroVariant": "section",
+    "heroImage": "sections/krigsvold-mountains",
+    "body": "\n## Relationships\n\nGive each region a purpose. Orientation, working content, supporting information, and commands should have stable edges and understandable scope.\n\n## Hierarchy\n\nA title names the page. Metadata explains its context. Section headings divide the argument. Controls should look like controls, and sustained prose should have a bounded reading measure.\n\n| Object | Responsibility |\n| --- | --- |\n| Masthead | Title, summary, date, author, and tags |\n| Navigation | Links to other destinations |\n| Contents | Links into the current document |\n| Reading column | The argument and its evidence |\n\n## States\n\nAppearance is a page preference, not a replacement for semantic structure. Light and dark retain the same relationships. The menu exposes its expanded state, responds to Escape, and returns focus to its trigger.\n\n> A shared stylesheet is a contract between markup and presentation. It is not a promise that unrelated markup will look the same.\n\n## Boundaries\n\nThese templates borrow no institutional or personal content from the source websites. Their shell is a maintained derivative of the React reference. The original websites remain unchanged.\n",
+    "toc": [
+      {
+        "id": "relationships",
+        "title": "Relationships"
+      },
+      {
+        "id": "hierarchy",
+        "title": "Hierarchy"
+      },
+      {
+        "id": "states",
+        "title": "States and continuity"
+      },
+      {
+        "id": "boundaries",
+        "title": "Boundaries"
+      }
+    ]
+  },
+  {
+    "path": "journal",
+    "title": "Notes from the workshop.",
+    "eyebrow": "The journal",
+    "summary": "Working notes about clear composition and deliberate interfaces.",
+    "heroVariant": "section",
+    "heroImage": "sections/krigsvold-penguins",
+    "body": "## What a shell should own\n\n[A masthead, navigation, a reading measure, and a useful footer.](/journal/what-a-shell-should-own/)\n\nPublished content remains useful with or without JavaScript."
+  },
+  {
+    "path": "setup",
+    "title": "Use this template.",
+    "eyebrow": "Start with the source",
+    "summary": "A standalone React starter with the complete Krigsvold visual shell.",
+    "heroVariant": "compact",
+    "body": "## Start a project\n\nInstall the native React components and their Core foundations:\n\n```sh\nnpm install @krigsvold/react@0.2.1 @krigsvold/core@2.2.5\n```\n\n## Use the reference source\n\nThe standalone reference application is in `examples/react-catalog` in the [React source repository](https://github.com/krigsvolddesign/react). Its own React components provide this homepage, the shared shell, all 50 canonical examples, and the interactive application specimens.\n\n## Make it yours\n\nEdit the identity and destinations in `src/shell/SourceShell.tsx`, the hero in `Masthead.tsx`, and the homepage words in `ReferencePages.tsx`. Keep the bundled image attribution when using the approved photography.\n\n[Browse all examples](/examples/) or [inspect versioned documentation](/docs/)."
+  },
+  {
+    "path": "image-credits",
+    "title": "Secondary image credits",
+    "summary": "Sources, licenses, and adaptations for the section photography.",
+    "heroVariant": "plain",
+    "body": "\n## Secondary section photography\n\nThese locally hosted photographs are host-site content for the section hero tier. Original source file digests and links are recorded below. Responsive WebPs are explicitly cropped and resized; no color, tint, or overlay is baked into their pixels. Family tinting belongs to CSS. These assets do not replace either approved homepage panorama.\n\n## krigsvold-mountains\n\nTransantarctic Mountains November 2019.jpg \u2014 John Hardin; CC BY 4.0. Cropped to 3:1 and resized as WebP. Source: [original photograph](https://commons.wikimedia.org/wiki/File:Transantarctic_Mountains_November_2019.jpg). License: https://creativecommons.org/licenses/by/4.0.\n\nOriginal SHA256: `b6c3ab3a5bf150807ee403038ede06c33605ec03c748031218593fe83ab04f5b`.\nDerivative license: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0).\n\n## krigsvold-penguins\n\nGentoo Life (204386763).jpeg \u2014 Rob Oo; CC BY 3.0. Cropped to 3:1 and resized as WebP. Source: [original photograph](https://commons.wikimedia.org/wiki/File:Gentoo_Life_(204386763).jpeg). License: https://creativecommons.org/licenses/by/3.0.\n\nOriginal SHA256: `ea529e2e38aba92c2ca2b5eb054d66cb0295070c3c3efe189a7a2c68977682c7`.\nDerivative license: [CC BY 3.0](https://creativecommons.org/licenses/by/3.0).\n\n## krigsvold-sea-ice\n\nOld sea ice, young sea ice (30940289812).jpg \u2014 NASA / Maria-Jose Vi\u00f1as; Public domain. Cropped to 3:1 and resized as WebP. Source: [original photograph](https://commons.wikimedia.org/wiki/File:Old_sea_ice,_young_sea_ice_(30940289812).jpg). License: https://commons.wikimedia.org/wiki/Template:PD-USGov-NASA.\n\nOriginal SHA256: `1c58d2983ecff7e1ecc31dca2b0b1ddd67a7b4d2015dc1ee71663c33113bb78b`.\nDerivative license: [Public domain](https://commons.wikimedia.org/wiki/Template:PD-USGov-NASA).\n"
+  },
+  {
+    "path": "journal/what-a-shell-should-own",
+    "title": "What a shell should own",
+    "eyebrow": "The journal",
+    "summary": "A dependable frame leaves room for the work.",
+    "heroVariant": "compact",
+    "body": "\n## The frame\n\nA website shell should own the recurring relationships: the site identity, navigation, masthead, reading measures, and footer. A page supplies its subject, metadata, and content.\n\nThis article puts its contents inside the narrow reading column. The wide language page puts its index to the left. Both can be viewed on the same screen: the composition follows the available content space, not only the viewport.\n\n## The reading\n\nA date and an author belong with the title. Tags describe the article. They are not loose paragraphs dropped between the masthead and the opening sentence.\n\nThe main text begins below the masthead. It has enough room for a sustained thought, without stretching each line across the full screen.\n\n## The contract\n\nReact prerenders the page before it reaches the browser. The shared CSS still recognizes the same masthead, container, heading, and footer classes. That is the abstraction being tested here.\n\n```html\n<header class=\"page-intro\">\n  <div class=\"page-intro__shade\">\n    <div class=\"container page-intro__content\">\u2026</div>\n  </div>\n</header>\n```\n\nThe markup above illustrates the Martlet masthead; Krigsvold uses its own `page-masthead` hierarchy. Shared concepts do not require identical family markup.\n"
+  },
+  {
+    "path": "docs",
+    "title": "React documentation",
+    "eyebrow": "Build with Krigsvold",
+    "summary": "Native components, complete examples, and source-qualified documentation.",
+    "heroVariant": "compact",
+    "body": "## Published documentation\n\n[Version 0.2.1](/docs/v/0.2.1/) preserves its protected release source and complete-file integrity manifest.\n\n[All 50 examples](/examples/) demonstrate the current accepted reference application.\n\nThe advanced remote archive is disabled. This is a static reference build; administrator-immutable storage is not claimed."
+  }
+]
