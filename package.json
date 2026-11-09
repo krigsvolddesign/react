@@ -28,7 +28,7 @@
     "react": "^19.0.0"
   },
   "dependencies": {
-    "@krigsvold/core": "github:krigsvolddesign/core#bf8ebe71430dc3bac1c1790f519f67cdc491e0e3"
+    "@krigsvold/core": "github:krigsvolddesign/core#98814984884b20b00210c4f58421c8556d9e924f"
   },
   "scripts": {
     "build": "npm run build:package && npm run build:gallery",

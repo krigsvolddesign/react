@@ -1,10 +1,10 @@
 {
   "package": "@krigsvold/core",
   "version": "2.3.0",
-  "source": "github:krigsvolddesign/core#bf8ebe71430dc3bac1c1790f519f67cdc491e0e3",
+  "source": "github:krigsvolddesign/core#98814984884b20b00210c4f58421c8556d9e924f",
   "files": {
     "reference.css": "985b85c22680e76de1e226a4e26ed63c6583b00ae03fa814efbab61fc295922b",
     "fonts.css": "acc1aca21d6a25594b82e6c63da7e8e0f3fcb6459e2bb60521ac0db7556bf162",
-    "react-reference.css": "66e63a5b514c2889ed76f05474574d2eb1dfa985dd15b6ad9156bcf9bd709fbe"
+    "react-reference.css": "1ad35afd08fa16520d688e6e98ff8af376dd7e9cac0d959a2e69b33618584898"
   }
 }
