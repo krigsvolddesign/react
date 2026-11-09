@@ -28,14 +28,16 @@
     "react": "^19.0.0"
   },
   "dependencies": {
-    "@krigsvold/core": "2.2.5"
+    "@krigsvold/core": "github:krigsvolddesign/core#bf8ebe71430dc3bac1c1790f519f67cdc491e0e3"
   },
   "scripts": {
     "build": "node build.mjs",
     "test": "npm run build && node --test tests/*.test.mjs",
     "test:browser": "DESIGN_FAMILY=krigsvold node tests/browser-check.mjs",
     "build:gallery": "NIGHTJAR_FAMILY=krigsvold node examples/react-catalog/build.mjs",
-    "build:reference": "node scripts/build-reference-deployment.mjs"
+    "build:reference": "node scripts/build-reference-deployment.mjs",
+    "styles:sync": "node scripts/sync-core-styles.mjs",
+    "styles:check": "node scripts/sync-core-styles.mjs --check"
   },
   "repository": {
     "type": "git",
@@ -47,16 +49,16 @@
     "provenance": true
   },
   "devDependencies": {
-    "@types/react": "19.3.0",
-    "react": "19.3.1",
-    "react-dom": "19.3.1",
-    "typescript": "7.0.2",
     "@axe-core/playwright": "4.11.1",
-    "playwright": "1.64.1",
+    "@types/react": "19.3.0",
     "esbuild": "0.27.4",
-    "vite": "8.3.5",
     "markdown-it": "14.3.3",
     "markdown-it-footnote": "4.0.0",
-    "sanitize-html": "2.18.1"
+    "playwright": "1.64.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "sanitize-html": "2.18.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.5"
   }
 }
