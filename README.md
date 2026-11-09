@@ -45,7 +45,7 @@ Acceptance follows the [ratified GitFlow policy](https://github.com/k3jph/design
 
 ### Shared presentation
 
-Core owns all React presentation. `src/styles.css` is only a Core import. The reference build copies `reference.css`, `reference-fonts.css`, and the optional React anatomy adapter directly from Core, recording their hashes in `core-styles.json`. `reference.css` is the same file consumed by Astro and Jekyll. Change visual rules in Core, update the pinned dependency, and run `npm run styles:sync`; do not add page styles or inline CSS.
+Core owns all React presentation. `src/styles.css` is only a Core import. The reference build copies `krigsvold.css`, `reference-fonts.css`, and the optional React anatomy adapter directly from Core, recording their hashes in `core-styles.json`. `krigsvold.css` is the same file consumed by Astro and Jekyll. Change visual rules in Core, update the pinned dependency, and run `npm run styles:sync`; do not add page styles or inline CSS.
 
 The development reference can use an immutable Core commit without a package release. Earlier package documentation remains available in GitHub release tags. Updating the development reference does not publish npm packages.
 
