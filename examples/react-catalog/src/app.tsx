@@ -5,7 +5,6 @@ const specialKinds=['gallery','workspace','chat','sensors','scene'];
 import type {ReactNode} from 'react';
 import {exampleImage} from './assets';
 import {DemoForm,Search} from './interactive';
-import './style.css';
 import {SourceShell} from './shell/SourceShell';
 import {Masthead} from './shell/Masthead';
 import {ReferenceHome,ReferencePage} from './ReferencePages';

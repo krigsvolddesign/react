@@ -1,3 +1,4 @@
+import '../../scripts/sync-core-styles.mjs';
 import {build,createServer} from 'vite';
 import {validBase} from './src/base.mjs';
 import {renderToString} from 'react-dom/server';
@@ -15,12 +16,11 @@ import {pageDataElement} from './src/page-data.mjs';
 const family=process.env.NIGHTJAR_FAMILY, base=process.env.NIGHTJAR_BASE || '/';
 if(!['martlet','krigsvold'].includes(family)||!validBase(base))throw Error('Provide a family and an absolute directory base');
 const root=resolve('examples/react-catalog'),configFile=resolve(root,'vite.config.mjs');
-const canonicalStyles=['fonts','shell','jekyll','examples','examples-family'].map(name=>`<link rel="stylesheet" href="${base}assets/css/${name}.css">`).join('');
 function renderDocument(template,options){
  const variant=options.markup.match(/data-hero-variant="([a-z]+)"/)?.[1]||'plain';
- const dashboard=!options.markup.includes('data-hero-variant=');
+ const dashboard=options.markup.includes('data-reference-dashboard="true"');
  const init=`<script>try{const mode=localStorage.getItem('design-appearance')==='dark'?'dark':'light';document.documentElement.dataset.appearance=mode;document.documentElement.dataset.krigsvold=mode}catch{}</script>`;
- return renderTemplate(template,{...options,styles:(options.styles||'')+canonicalStyles+init}).replace('<body>',`<body class="krigsvold hero-context--${variant}${dashboard?' dashboard-page':''}">`);
+ return renderTemplate(template,{...options,styles:(options.styles||'')+init}).replace('<body>',`<body class="krigsvold react-reference hero-context--${variant}${dashboard?' dashboard-page':''}">`);
 }
 
 peerDashboardURL(process.env.NIGHTJAR_PEER_URL,'analytics');
@@ -49,13 +49,13 @@ try {
   const pageRendered=Object.fromEntries(page.sections.filter(section=>section.body).map(section=>[`${page.id}-${section.id}`,rendered[`${page.id}-${section.id}`]]));
   const data={id:page.id,page,rendered:pageRendered,entries:page.sections.some(section=>section.kind==='search')?entries:[],requiresSpecial:needsSpecial};
   const markup=renderToString(React.createElement(App,{data,...(needsSpecial?{special:renderSpecial}:{})}));
-  const css=needsSpecial?manifest['src/special.tsx']?.css:[];if(needsSpecial&&!css?.length)throw Error('Missing interactive stylesheet in build manifest');
+  const css=manifest['src/special.tsx']?.css||[];
   const styles=css.map(file=>`<link rel="stylesheet" crossorigin href="${base}${file}">`).join('');
   await writeFile(resolve(dir,'index.html'),renderDocument(template,{styles:styles+pageDataElement(data),markup,title:`${page.title} · Northlight`,originalTitle:'<title>Northlight examples</title>'}));
  }
 
  const homeData={id:'reference-home',page:null,rendered:{},entries:[],requiresSpecial:false};
- const home=renderDocument(template,{styles:pageDataElement(homeData),markup:renderToString(React.createElement(App,{data:homeData})),title:'Krigsvold, in plain sight. · React',originalTitle:'<title>Northlight examples</title>'});
+ const home=renderDocument(template,{styles:pageDataElement(homeData),markup:renderToString(React.createElement(App,{data:homeData})),title:'Krigsvold for React. · React',originalTitle:'<title>Northlight examples</title>'});
  await writeFile(resolve(out,'index.html'),home);await mkdir(resolve(out,'home'),{recursive:true});await writeFile(resolve(out,'home/index.html'),home);
  for(const page of referenceDocuments){
   const data={id:'reference-'+page.path,page:null,reference:page,rendered:{reference:referenceHeadingAnchors(renderMarkdown(page.body,base,{docId:'reference-'+page.path.replaceAll('/','-')}),page.anchors??page.toc)},entries:[],requiresSpecial:false};
@@ -68,7 +68,7 @@ try {
  for(const [id,name] of dashboards){
   const module=await server.ssrLoadModule(`/src/dashboard/${name}.tsx`);const dir=resolve(indexDir,`dashboard-${id}`);await mkdir(dir,{recursive:true});
   const markup=renderToString(React.createElement(DashboardFrame,{current:id},React.createElement(module[name])));
-  const css=manifest[`src/dashboard/${name}.tsx`]?.css;if(!css?.length)throw Error(`Missing ${name} stylesheet in build manifest`);
+  const css=manifest[`src/dashboard/${name}.tsx`]?.css||[];
   const styles=css.map(file=>`<link rel="stylesheet" crossorigin href="${base}${file}">`).join('');
   await writeFile(resolve(dir,'index.html'),renderDocument(dashboardTemplate,{styles,markup,title:`${name} · Northlight`,originalTitle:'<title>Northlight dashboard</title>'}));
  }

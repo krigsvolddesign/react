@@ -41,3 +41,12 @@ test('the delivery entrypoint binds artifacts to its own repository, package and
  verifyReferenceIdentity(input);
  for(const mutate of [x=>x.artifact.family='krigsvold',x=>x.artifact.source.repository='krigsvolddesign/react',x=>x.version.package.name='@krigsvold/react',x=>x.version.core.version='2.2.3',x=>x.pkg.repository.url='git+https://github.com/untrusted/react.git']){const bad=structuredClone(input);mutate(bad);assert.throws(()=>verifyReferenceIdentity(bad));}
 });
+
+test('live reference Core and archived release Core have separate identities',()=>{
+ const pin={family:'krigsvold',core:{name:'@krigsvold/core',version:'2.2.4',integrity:'release-pin'}},source='github:krigsvolddesign/core#'+'a'.repeat(40);
+ const pkg={name:'@krigsvold/react',version:'0.2.1',repository:{url:'git+https://github.com/krigsvolddesign/react.git'},dependencies:{'@krigsvold/core':source}};
+ const artifact={family:'krigsvold',source:{repository:'krigsvolddesign/react'}};
+ const version={package:{name:pkg.name,version:pkg.version},core:pin.core,referenceCore:{package:pin.core.name,version:'2.3.0',source}};
+ verifyReferenceIdentity({artifact,version,pkg,pin});
+ for(const referenceCore of [undefined,{...version.referenceCore,source:source.slice(0,-1)+'b'},{...version.referenceCore,package:'@other/core'}])assert.throws(()=>verifyReferenceIdentity({artifact,version:{...version,referenceCore},pkg,pin}));
+});
