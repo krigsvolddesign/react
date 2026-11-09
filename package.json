@@ -31,13 +31,17 @@
     "@krigsvold/core": "github:krigsvolddesign/core#bf8ebe71430dc3bac1c1790f519f67cdc491e0e3"
   },
   "scripts": {
-    "build": "node build.mjs",
-    "test": "npm run build && node --test tests/*.test.mjs",
+    "build": "npm run build:package && npm run build:gallery",
+    "test": "npm run build:package && node --test tests/*.test.mjs",
     "test:browser": "DESIGN_FAMILY=krigsvold node tests/browser-check.mjs",
-    "build:gallery": "NIGHTJAR_FAMILY=krigsvold node examples/react-catalog/build.mjs",
-    "build:reference": "node scripts/build-reference-deployment.mjs",
+    "build:gallery": "npm run styles:sync && vite build --config examples/react-catalog/vite.config.mjs --mode krigsvold",
+    "build:reference": "npm run build:gallery",
     "styles:sync": "node scripts/sync-core-styles.mjs",
-    "styles:check": "node scripts/sync-core-styles.mjs --check"
+    "styles:check": "node scripts/sync-core-styles.mjs --check",
+    "build:package": "node build.mjs",
+    "preview": "vite preview --config examples/react-catalog/vite.config.mjs --mode krigsvold",
+    "deploy": "wrangler deploy",
+    "deploy:preview": "wrangler preview"
   },
   "repository": {
     "type": "git",
@@ -59,6 +63,7 @@
     "react-dom": "19.3.1",
     "sanitize-html": "2.18.1",
     "typescript": "7.0.2",
-    "vite": "8.3.5"
+    "vite": "8.3.5",
+    "wrangler": "4.158.0"
   }
 }
