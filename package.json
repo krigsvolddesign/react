@@ -1,6 +1,6 @@
 {
   "name": "@krigsvold/react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Krigsvold React components",
   "type": "module",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "react": "^19.0.0"
   },
   "dependencies": {
-    "@krigsvold/core": "3.0.0"
+    "@krigsvold/core": "3.0.1"
   },
   "scripts": {
     "build": "npm run build:package && npm run build:gallery",
