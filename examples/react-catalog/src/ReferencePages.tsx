@@ -1,7 +1,7 @@
 import {SourceShell,referenceHref as href} from './shell/SourceShell';
 import {Masthead} from './shell/Masthead';
 export type ReferenceDocument={path:string;title:string;summary:string;eyebrow?:string;heroVariant?:'signature'|'section'|'compact'|'plain';heroImage?:string;show_toc?:boolean;anchors?:{id:string;title:string}[];toc?:{id:string;title:string}[];body:string};
-export function ReferenceHome(){return <SourceShell current="home"><Masthead title="Krigsvold, in plain sight." eyebrow="The React reference" summary="The same shell. React components, Markdown, and a little JavaScript. Nothing hiding the design." variant="signature"/>
+export function ReferenceHome(){return <SourceShell current="home"><Masthead title="Krigsvold for React." eyebrow="The React reference" summary="The same shell. React components, Markdown, and a little JavaScript. Nothing hiding the design." variant="signature"/>
  <section className="section"><div className="container jekyll-document"><article className="content editorial-content">
   <h2>A smaller engine. The same language.</h2><p>This is a working React reference built from the accepted <strong>Krigsvold reference shell</strong>. Its stylesheet and approved photography are canonical exports. React supplies native components and interactive applications; the browser receives prerendered HTML.</p>
   <h3>Three compositions to inspect</h3><ul><li><a href={href('/language/')}>The language</a> uses a document with a focused reading measure.</li><li><a href={href('/journal/what-a-shell-should-own/')}>A journal entry</a> uses a narrow reading column, date, author, and tags.</li><li><a href={href('/setup/')}>Use this template</a> explains how to build it and replace the content.</li></ul>

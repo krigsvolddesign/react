@@ -5,7 +5,6 @@ const specialKinds=['gallery','workspace','chat','sensors','scene'];
 import type {ReactNode} from 'react';
 import {exampleImage} from './assets';
 import {DemoForm,Search} from './interactive';
-import './style.css';
 import {SourceShell} from './shell/SourceShell';
 import {Masthead} from './shell/Masthead';
 import {ReferenceHome,ReferencePage} from './ReferencePages';
@@ -59,7 +58,7 @@ export function App({data,special}:{data:CatalogPageData;special?:(section:unkno
   <div>
   <article aria-labelledby="page-title">{page.show_toc===true&&<nav className="example-local-index" aria-label="Manual contents"><p className="eyebrow">Manual contents</p><ol>{(page.toc??page.sections).map(section=><li key={section.id}><a href={`#${section.id}`}>{section.title}</a></li>)}</ol></nav>}<div className={page.id==='report'?'example-report-body':undefined}>
    {'author' in page && page.author && <nav aria-label="Article context"><a href={href('/examples/person/')}>About {page.author}</a> · <a href={href('/examples/archive/')}>All writing</a></nav>}
-   {'tags' in page && page.tags && <ul aria-label="Article subjects">{page.tags.map(tag=><li key={tag}><a href={href('/examples/categories/')}>{tag}</a></li>)}</ul>}
+   {'tags' in page && page.tags && <ul className="recipe-tags" role="list" aria-label="Article subjects">{page.tags.map(tag=><li key={tag}><a href={href('/examples/categories/')}>{tag}</a></li>)}</ul>}
    {'event' in page && page.event && <aside aria-label="Event details"><p><strong>Event details</strong></p><p>{isValidEventDateTime(page.event.start)?<time dateTime={page.event.start}>{page.event.display_start}</time>:<span>{page.event.display_start} (invalid start time)</span>} to {isValidEventDateTime(page.event.end)?<time dateTime={page.event.end}>{page.event.display_end}</time>:<span>{page.event.display_end} (invalid end time)</span>} · {page.event.timezone}</p>{isEventEndBeforeStart(page.event.start,page.event.end)&&<p>Event end is earlier than its start. Check the event times.</p>}<p>{page.event.location} · {page.event.registration}</p></aside>}
    {['changelog','dashboard-components'].includes(page.id)?<CanonicalRegister page={page} rendered={bodies}/>:page.sections.map(section=><SectionView key={section.id} section={section as Section} pageId={page.id} special={special} bodies={bodies} entries={entries}/>)}</div></article></div><p className="example-port-note">A {page.semantic_class.replaceAll('-',' ')} recipe in Krigsvold. <a href={href('/examples/integrations/')}>Capabilities and integration boundaries</a> · <a href={href('/examples/')}>All examples</a></p></div></div>
  </SourceShell>;
