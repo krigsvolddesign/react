@@ -1,9 +1,9 @@
 # Krigsvold React
 
-`@krigsvold/react` 1.0 defines the stable public API for the native React 19 components and TypeScript declarations. It consumes the exact published `@krigsvold/core@3.0.0` stylesheet foundation. [API.md](API.md) and the generated type declarations define the supported component contract. No workbench server is needed to install, build, or run it.
+`@krigsvold/react` 1.0 defines the stable public API for the native React 19 components and TypeScript declarations. It consumes the exact published `@krigsvold/core@3.0.1` stylesheet foundation. [API.md](API.md) and the generated type declarations define the supported component contract. No workbench server is needed to install, build, or run it.
 
 ```sh
-npm install @krigsvold/react@^1.0.0 react@^19 react-dom@^19
+npm install @krigsvold/react@^1.0.1 react@^19 react-dom@^19
 ```
 
 ```tsx
