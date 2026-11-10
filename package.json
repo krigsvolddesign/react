@@ -1,7 +1,7 @@
 {
   "name": "@krigsvold/react",
-  "version": "0.2.2",
-  "description": "Experimental Krigsvold React components",
+  "version": "1.0.0",
+  "description": "Krigsvold React components",
   "type": "module",
   "license": "MIT",
   "private": true,
@@ -28,7 +28,7 @@
     "react": "^19.0.0"
   },
   "dependencies": {
-    "@krigsvold/core": "github:krigsvolddesign/core#fbe6c8719958c59db1b6983ded216c789ee70f5c"
+    "@krigsvold/core": "3.0.0"
   },
   "scripts": {
     "build": "npm run build:package && npm run build:gallery",
@@ -49,7 +49,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "tag": "next",
+    "tag": "latest",
     "provenance": true
   },
   "devDependencies": {

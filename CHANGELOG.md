@@ -1,5 +1,13 @@
 # @krigsvold/react changelog
 
+## 1.0.0
+
+- Establish the stable React 19 component and TypeScript API described in API.md.
+- Consume published Core 3.0.0 and its centralized React and canonical family stylesheets; replace development Git dependencies with exact registry pins.
+- Align the three dashboards, article metadata, scientific workspace contrast, field sizing, and navigation with the shared family contracts.
+- Retain native React state ownership, validation, focus restoration, CSV export, and progressive fallback behavior.
+- Use the stable npm channel and automatic trusted publication from accepted main.
+
 ## 0.2.2
 
 - Remove automatic contents lists from native documents and examples while retaining all existing headings, anchors, routes and application navigation.
